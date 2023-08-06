@@ -1,7 +1,7 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import TodoList from './TodoList';
 import TodoAddPanel from './TodoAddPanel';
-import { Todo } from '../Types';
+import { Todo, TodoNew } from '../Types';
 
 const DEFAULT_TODO_LIST: Array<Todo> = [
   { id: 1, title: 'task 1', completed: false },
@@ -15,6 +15,13 @@ const TodoForm = () => {
   const [todos, setTodos] = useState(DEFAULT_TODO_LIST);
   const [lastId, setlastId] = useState<number>(todos[todos.length - 1]?.id + 1);
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [newTodo, setNewTodo] = useState<Array<TodoNew>>([]);
+
+  useEffect(() => {
+    fetch('/api/todo')
+      .then((response) => response.json())
+      .then((response) => setNewTodo(response));
+  });
 
   const filteredTodos = useMemo(() => {
     if (searchQuery) {
@@ -75,6 +82,9 @@ const TodoForm = () => {
         onChange={(e) => setSearchQuery(e.target.value)}
         className="simple_input"
       />
+      {newTodo.map((todo2: any) => (
+        <div>{todo2.task_name}</div>
+      ))}
       <TodoList
         todoIdForEdit={todoIdForEdit}
         todos={filteredTodos}

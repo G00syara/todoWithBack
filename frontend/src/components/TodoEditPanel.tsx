@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import MyButton from './UI/button/MyButton';
-import { Todo } from '../Types';
+import { Todo, TodoNew } from '../Types';
 
 interface EditTodoPanelProps {
   mode: 'edit';
