@@ -1,36 +1,36 @@
-import { NextFunction } from 'express'
+import { NextFunction, RequestHandler } from 'express'
 import { pool as db } from '../db/db.js'
 
-export const createTodo = async (req: any, res: any, next: NextFunction) => {
+export const createTask:RequestHandler = async (req: any, res: any, next: NextFunction) => {
   try {
     const { task_name } = req.body
-    const newTodo = await db.query(
+    const newTask = await db.query(
       `INSERT INTO tasks (task_name) values ($1) RETURNING *`,
       [task_name]
     )    
-    res.json(newTodo.rows[0])
+    res.json(newTask.rows[0])
   } catch (error) {
     next(error)
-    res.status(400).json({ msg: 'Create todo error' })  }
+    res.status(400).json({ msg: 'Create Task error' })  }
 }
 
-export const getAllTodo = async (req: any, res: any, next: NextFunction) => {
+export const getAllTask:RequestHandler = async (req: any, res: any, next: NextFunction) => {
   try {
     const tasks = await db.query(`SELECT * FROM tasks`)
     res.json(tasks.rows)
   } catch (error) {
     next(error)
-    res.status(400).json({ msg: 'Get all todo error' })  }
+    res.status(400).json({ msg: 'Get all Task error' })  }
   }
-  export const getAllTodoWithCategories = async (req: any, res: any, next: NextFunction) => {
+  export const getAllTaskWithCategories:RequestHandler = async (req: any, res: any, next: NextFunction) => {
     try {
     const tasks = await db.query(`SELECT t.*, c.categories_name FROM tasks t inner join categories_tasks ct on t.id = ct.task_id inner join categories c on ct.categories_id = c.id`)
     res.json(tasks.rows)
   } catch (error) {
     next(error)
-    res.status(400).json({ msg: 'Get all todo error' })  }
+    res.status(400).json({ msg: 'Get all Task error' })  }
   }
-export const updateTodo = async (req: any, res: any, next: NextFunction) => {
+export const updateTask:RequestHandler = async (req: any, res: any, next: NextFunction) => {
   try {
     const { id, task_checked = false, task_name } = req.body
     const task = await db.query(
@@ -40,16 +40,16 @@ export const updateTodo = async (req: any, res: any, next: NextFunction) => {
     res.json(task.rows[0])
   } catch (error) {
     next(error)
-    res.status(400).json({ msg: 'Update todo error' })  }
+    res.status(400).json({ msg: 'Update Task error' })  }
 
 }
-export const deleteTodo = async (req: any, res: any, next: NextFunction) => {
+export const deleteTask:RequestHandler = async (req: any, res: any, next: NextFunction) => {
   try {
     const id = req.params.id
     const task = await db.query(`DELETE from tasks where id = $1`, [id])
     res.json(task.rows[0])
   } catch (error) {
     next(error)
-    res.status(400).json({ msg: 'Delete todo error' })  }
+    res.status(400).json({ msg: 'Delete Task error' })  }
   }
 

@@ -1,7 +1,7 @@
-import { NextFunction } from 'express'
+import { NextFunction, RequestHandler } from 'express'
 import { pool as db } from '../db/db.js'
 
-export const createCategory = async (req: any, res: any, next: NextFunction) => {
+export const createCategory:RequestHandler = async (req: any, res: any, next: NextFunction) => {
   try {
     const { categories_name } = req.body
     const newCategory = await db.query(
@@ -14,7 +14,7 @@ export const createCategory = async (req: any, res: any, next: NextFunction) => 
     res.status(400).json({ msg: 'Create category error' })  }
 }
 
-export const getAllCategory = async (req: any, res: any, next: NextFunction) => {
+export const getAllCategory:RequestHandler = async (req: any, res: any, next: NextFunction) => {
   try {
     const categories = await db.query(`SELECT * FROM categories`)
     res.json(categories.rows)

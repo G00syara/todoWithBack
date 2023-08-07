@@ -1,11 +1,11 @@
 import { Router } from 'express'
 import {
-  createTodo,
-  deleteTodo,
-  getAllTodo,
-  getAllTodoWithCategories,
-  updateTodo,
-} from '../controller/todo.controller.js'
+  createTask,
+  deleteTask,
+  getAllTask,
+  getAllTaskWithCategories,
+  updateTask,
+} from '../controller/task.controller.js'
 import {
   createCategory,
   getAllCategory
@@ -13,11 +13,11 @@ import {
 
 export const router = Router()
 
-router.post('/task', createTodo)
-router.get('/task', getAllTodo)
-router.put('/task', updateTodo)
-router.delete('/task/:id', deleteTodo)
-router.get('/task/categories', getAllTodoWithCategories)
+router.post('/task', createTask)
+router.get('/task', getAllTask)
+router.put('/task', updateTask)
+router.delete('/task/:id', deleteTask)
+router.get('/task/categories', getAllTaskWithCategories)
 
 
 router.post('/categories', createCategory)
