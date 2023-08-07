@@ -22,6 +22,14 @@ export const getAllTodo = async (req: any, res: any, next: NextFunction) => {
     next(error)
     res.status(400).json({ msg: 'Get all todo error' })  }
   }
+  export const getAllTodoWithCategories = async (req: any, res: any, next: NextFunction) => {
+    try {
+    const tasks = await db.query(`SELECT t.*, c.categories_name FROM tasks t inner join categories_tasks ct on t.id = ct.task_id inner join categories c on ct.categories_id = c.id`)
+    res.json(tasks.rows)
+  } catch (error) {
+    next(error)
+    res.status(400).json({ msg: 'Get all todo error' })  }
+  }
 export const updateTodo = async (req: any, res: any, next: NextFunction) => {
   try {
     const { id, task_checked = false, task_name } = req.body
