@@ -11,7 +11,7 @@ export const createCategory = async (req: any, res: any, next: NextFunction) => 
     res.json(newCategory.rows[0])
   } catch (error) {
     next(error);
-  }
+    res.status(400).json({ msg: 'Create category error' })  }
 }
 
 export const getAllCategory = async (req: any, res: any, next: NextFunction) => {
@@ -20,5 +20,5 @@ export const getAllCategory = async (req: any, res: any, next: NextFunction) => 
     res.json(categories.rows)
   } catch (error) {
     next(error)
-  }
+    res.status(400).json({ msg: 'Delete category error' })  }
 }

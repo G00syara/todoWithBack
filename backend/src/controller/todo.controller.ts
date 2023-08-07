@@ -10,8 +10,8 @@ export const createTodo = async (req: any, res: any, next: NextFunction) => {
     )
     res.json(newTodo.rows[0])
   } catch (error) {
-    next(error);
-  }
+    next(error)
+    res.status(400).json({ msg: 'Create todo error' })  }
 }
 
 export const getAllTodo = async (req: any, res: any, next: NextFunction) => {
@@ -20,8 +20,8 @@ export const getAllTodo = async (req: any, res: any, next: NextFunction) => {
     res.json(tasks.rows)
   } catch (error) {
     next(error)
+    res.status(400).json({ msg: 'Get all todo error' })  }
   }
-}
 export const updateTodo = async (req: any, res: any, next: NextFunction) => {
   try {
     const { id, task_checked = false, task_name } = req.body
@@ -32,7 +32,8 @@ export const updateTodo = async (req: any, res: any, next: NextFunction) => {
     res.json(task.rows[0])
   } catch (error) {
     next(error)
-  }
+    res.status(400).json({ msg: 'Update todo error' })  }
+
 }
 export const deleteTodo = async (req: any, res: any, next: NextFunction) => {
   try {
@@ -41,5 +42,6 @@ export const deleteTodo = async (req: any, res: any, next: NextFunction) => {
     res.json(task.rows[0])
   } catch (error) {
     next(error)
+    res.status(400).json({ msg: 'Delete todo error' })  }
   }
-}
+
