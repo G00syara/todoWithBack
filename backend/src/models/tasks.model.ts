@@ -6,12 +6,6 @@ import { Table, Column, Model, DataType  } from 'sequelize-typescript';
 })
 export class Tasks extends Model {
     @Column({
-        type: DataType.NUMBER,
-        allowNull: false,
-        primaryKey: true,
-      })
-      id!: number
-    @Column({
         type: DataType.STRING,
         allowNull: false,
       })
