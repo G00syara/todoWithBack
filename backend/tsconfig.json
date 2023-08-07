@@ -34,7 +34,7 @@
     "**/*.js",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/routes/todo.routes.ts"
+    "src/routes/routes.ts"
   ],
   "exclude": ["node_modules"]
 }

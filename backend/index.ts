@@ -1,5 +1,5 @@
 import express from 'express'
-import { router } from './src/routes/todo.routes.js'
+import { router } from './src/routes/routes.js'
 const PORT = process.env.PORT || 8080
 
 const app = express()

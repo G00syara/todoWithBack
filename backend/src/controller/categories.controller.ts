@@ -1,0 +1,24 @@
+import { NextFunction } from 'express'
+import { pool as db } from '../db/db.js'
+
+export const createCategory = async (req: any, res: any, next: NextFunction) => {
+  try {
+    const { categories_name } = req.body
+    const newCategory = await db.query(
+      `INSERT INTO categories (categories_name) values ($1) RETURNING *`,
+      [categories_name]
+    )
+    res.json(newCategory.rows[0])
+  } catch (error) {
+    next(error);
+  }
+}
+
+export const getAllCategory = async (req: any, res: any, next: NextFunction) => {
+  try {
+    const categories = await db.query(`SELECT * FROM categories`)
+    res.json(categories.rows)
+  } catch (error) {
+    next(error)
+  }
+}
