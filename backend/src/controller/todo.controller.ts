@@ -7,7 +7,7 @@ export const createTodo = async (req: any, res: any, next: NextFunction) => {
     const newTodo = await db.query(
       `INSERT INTO tasks (task_name) values ($1) RETURNING *`,
       [task_name]
-    )
+    )    
     res.json(newTodo.rows[0])
   } catch (error) {
     next(error)
