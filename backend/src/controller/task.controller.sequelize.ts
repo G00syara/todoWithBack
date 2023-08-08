@@ -1,5 +1,8 @@
 import { Tasks } from '../models/tasks.model.js'
 import { NextFunction, RequestHandler } from 'express'
+import { Categories } from '../models/categories.model.js';
+import { Sequelize } from 'sequelize';
+import { TasksCategories } from '../models/tasks_categories.model.js';
 
 export const createTask:RequestHandler = async (req: any, res: any, next: NextFunction) => {
   try {
@@ -12,20 +15,12 @@ export const createTask:RequestHandler = async (req: any, res: any, next: NextFu
 
 export const getAllTask:RequestHandler = async (req: any, res: any, next: NextFunction) => {  
   try {
-    const allTasks: Tasks[] = await Tasks.findAll()
-    res.json({message: 'makes cool', data: allTasks})
+    const allTasks: Tasks[] = await Tasks.findAll({ include:{model: Categories, attributes: ['categories_name']}})
+        res.json({message: 'makes cool', data: allTasks})
   } catch (error) {
     next(error)
     res.status(400).json({ msg: 'Get all Task error' })  }
   }
-//   export const getAllTaskWithCategories:RequestHandler = async (req: any, res: any, next: NextFunction) => {
-//     try {
-//     const tasks = await db.query(`SELECT t.*, c.categories_name FROM tasks t inner join categories_tasks ct on t.id = ct.task_id inner join categories c on ct.categories_id = c.id`)
-//     res.json(tasks.rows)
-//   } catch (error) {
-//     next(error)
-//     res.status(400).json({ msg: 'Get all Task error' })  }
-//   }
 export const updateTask:RequestHandler = async (req: any, res: any, next: NextFunction) => {
   try {
     const {id} = req.params;

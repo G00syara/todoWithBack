@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, BelongsToMany, PrimaryKey  } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsToMany, PrimaryKey, AutoIncrement  } from 'sequelize-typescript';
 import { Tasks } from './tasks.model.js';
 import { TasksCategories } from './tasks_categories.model.js';
 
@@ -7,12 +7,13 @@ import { TasksCategories } from './tasks_categories.model.js';
     tableName: "categories",
 })
 export class Categories extends Model {
-    @BelongsToMany(() => Tasks, () => TasksCategories)
-    categories!: Tasks[]
-
+    
     @Column({
         type: DataType.STRING,
         allowNull: false,
       })
       categories_name!: string;
+
+    @BelongsToMany(() => Tasks, () => TasksCategories)
+      tasks!: Tasks[]
 }

@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, BelongsToMany, PrimaryKey  } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsToMany, PrimaryKey, AutoIncrement  } from 'sequelize-typescript';
 import { Categories } from './categories.model.js';
 import { TasksCategories } from './tasks_categories.model.js';
 
@@ -8,12 +8,8 @@ import { TasksCategories } from './tasks_categories.model.js';
 })
 
 export class Tasks extends Model {
-    @BelongsToMany(() => Categories, () => TasksCategories)
-    categories!: Categories[]
-    
+
     @Column({
-        onDelete: 'Cascade',
-        onUpdate: 'Cascade',
         type: DataType.STRING,
         allowNull: false,
       })
@@ -24,4 +20,8 @@ export class Tasks extends Model {
         defaultValue: false,
       })
       task_checked!: boolean;
+
+      @BelongsToMany(() => Categories, () => TasksCategories)
+      categories!: Categories[]
+      
 }

@@ -4,15 +4,15 @@ import 'dotenv/config'
 import { Tasks } from "../models/tasks.model.js";
 import { TasksCategories } from "../models/tasks_categories.model.js";
 import { Categories } from "../models/categories.model.js";
-//Переделать на env
+
 export const connection = new Sequelize({
-   dialect: "postgres",
-    host: "localhost",
-    username: "postgres",
-    password: "admin",
-    database: "todolist", 
-  logging: false,
-  models: [Tasks, TasksCategories, Categories]
+    dialect: 'postgres',
+    host: process.env.POSTGRESS_HOST,
+    username: process.env.POSTGRESS_USER,
+    password: process.env.POSTGRESS_PASSWORD,
+    database: process.env.POSTGRESS_DATABASE, 
+    logging: false,
+    models: [Tasks, TasksCategories, Categories]
 
 });
 

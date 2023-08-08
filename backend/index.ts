@@ -19,6 +19,8 @@ app.use((err:Error, req: any, res: any, next: NextFunction)=> {
 
 // Нужно, чтобы добавить БД в проект
 // Надо поглубже разобраться
+
+
 connection.sync().then(() => {
     console.log('database started');
     
