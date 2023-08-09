@@ -1,104 +1,22 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import TodoList from './TodoList';
-import TodoAddPanel from './TodoAddPanel';
-import { Todo, TodoNew } from '../Types';
+export default 1;
+// import { useAppDispatch, useTypeSelector } from '../hooks/useTypeSelector.js';
+// import { useEffect, useMemo } from 'react';
+// import { fetchTasks } from '../store/reducer/taskReducer';
+// import { Tasks } from '../types/index.js';
+// import TodoItem from './TodoItem.js';
 
-const DEFAULT_TODO_LIST: Array<Todo> = [
-  { id: 1, title: 'task 1', completed: false },
-  { id: 2, title: 'task 2', completed: false },
-  { id: 3, title: 'task 3', completed: false },
-  { id: 4, title: 'tttask 3', completed: false },
-];
+// const TodoList = () => {
+//   const { tasks, isLoadingTodoList } = useTypeSelector((state) => state.task);
+//   // const { isLoadingGroups } = useTypeSelector((state) => state.todoGroups);
+//   const dispatch = useAppDispatch();
 
-const TodoForm = () => {
-  const [todoIdForEdit, setTodoIdForEdit] = useState<number | null>(null);
-  const [todos, setTodos] = useState(DEFAULT_TODO_LIST);
-  const [lastId, setlastId] = useState<number>(todos[todos.length - 1]?.id + 1);
-  const [searchQuery, setSearchQuery] = useState<string>('');
-  const [newTodo, setNewTodo] = useState<Array<TodoNew>>([]);
+//   // const todoItems = useMemo(() => tasks.map((item: Tasks) => <div key={item.id} task={item} />), [tasks]);
 
-  useEffect(() => {
-    fetch('/api/todo')
-      .then((response) => response.json())
-      .then((response) => setNewTodo(response));
-  });
+//   useEffect(() => {
+//     dispatch(fetchTasks());
+//   }, []);
 
-  const filteredTodos = useMemo(() => {
-    if (searchQuery) {
-      return [...todos].filter((todo) => todo.title.toLowerCase().includes(searchQuery.toLowerCase()));
-    }
-    return todos;
-  }, [searchQuery, todos]);
+//   return tasks;
+// };
 
-  const selectTodoIdForEdit = useCallback((id: Todo['id']) => {
-    setTodoIdForEdit(id);
-  }, []);
-
-  const deleteTodo = useCallback((id: Todo['id']) => {
-    setTodos((delTodo) => delTodo.filter((todo) => todo.id !== id));
-  }, []);
-
-  const addTodo = ({ title }: Pick<Todo, 'title'>) => {
-    setTodos((todos) => [...todos, { id: lastId, title, completed: false }]);
-    setlastId((x) => x + 1);
-  };
-
-  const checkTodo = useCallback((id: Todo['id']) => {
-    setTodos((checkCompletedTodo) =>
-      checkCompletedTodo.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, completed: !todo.completed };
-        }
-        return todo;
-      }),
-    );
-  }, []);
-
-  const changeTodo = ({ title }: Pick<Todo, 'title'>) => {
-    if (!title) {
-      return alert('Не оставляй поле пустым');
-    }
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === todoIdForEdit) {
-          return { ...todo, title, completed: todo.completed ? !todo.completed : todo.completed };
-        }
-        return todo;
-      }),
-    );
-    setTodoIdForEdit(null);
-  };
-
-  const cancelTodo = useCallback(() => {
-    setTodoIdForEdit(null);
-  }, []);
-
-  return (
-    <>
-      <input
-        type="text"
-        placeholder="Поиск..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="simple_input"
-      />
-      {newTodo.map((todo2: any) => (
-        <div>{todo2.task_name}</div>
-      ))}
-      <TodoList
-        todoIdForEdit={todoIdForEdit}
-        todos={filteredTodos}
-        deleteTodo={deleteTodo}
-        checkTodo={checkTodo}
-        selectTodoIdForEdit={selectTodoIdForEdit}
-        changeTodo={changeTodo}
-        cancelTodo={cancelTodo}
-      />
-      <TodoAddPanel addTodo={addTodo} />
-    </>
-  );
-};
-
-//
-
-export default React.memo(TodoForm);
+// export default TodoList;

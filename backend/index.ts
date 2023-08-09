@@ -1,10 +1,18 @@
 import { connection } from './src/db/db.sequelize.js';
 import express, { urlencoded, json, NextFunction } from 'express';
-// import { router } from './src/routes/routes.js'
 import { router } from './src/routes/routes.sequelize.js';
+import cors from 'cors';
+
 const PORT = process.env.PORT || 8080;
 
 const app = express();
+
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 app.use(json());
 app.use(urlencoded({ extended: true }));

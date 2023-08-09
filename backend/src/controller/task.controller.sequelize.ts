@@ -4,17 +4,18 @@ import { Categories } from '../models/categories.model.js';
 
 export const createTask: RequestHandler = async (req: any, res: any, next: NextFunction) => {
   try {
-    const category = await Categories.findOrCreate({
-      where: { id: 999, categories_name: 'Something' },
-    });
+    //Базовое задание категории элементу
+    // const category = await Categories.findOrCreate({
+    //   where: { id: 999, categories_name: 'Something' },
+    // });
 
     const tasks = await Tasks.create({
       ...req.body,
     });
 
-    await tasks.addCategory(999);
+    // await tasks.addCategory(5);
 
-    res.json({ data: tasks, category });
+    res.json({ data: tasks /*, category*/ });
   } catch (error) {
     next(error);
     res.status(400).json({ msg: 'Create Task error ' + error });
@@ -24,7 +25,7 @@ export const createTask: RequestHandler = async (req: any, res: any, next: NextF
 export const getAllTask: RequestHandler = async (req: any, res: any, next: NextFunction) => {
   try {
     const allTasks: Tasks[] = await Tasks.findAll({ include: { model: Categories } });
-    res.json({ message: 'makes cool', data: allTasks });
+    res.json({ data: allTasks });
   } catch (error) {
     next(error);
     res.status(400).json({ msg: 'Get all Task error ' + error });
