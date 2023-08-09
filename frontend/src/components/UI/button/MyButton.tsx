@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import classes from '../button/MyButton.module.css';
+import { Button } from './MyButton.styled';
 // import { PropsWithChildren } from 'react'; //Нужно чтобы каждый раз не прописывать children
 
 interface MyButtonProps extends React.ComponentPropsWithRef<'button'> {
@@ -7,11 +7,10 @@ interface MyButtonProps extends React.ComponentPropsWithRef<'button'> {
 }
 
 const MyButton: FC<MyButtonProps> = ({ children, onClick, ...props }) => {
-  const className = `${classes.button}`;
   return (
-    <button className={className} onClick={onClick} {...props}>
+    <Button onClick={onClick} {...props}>
       {children}
-    </button>
+    </Button>
   );
 };
 

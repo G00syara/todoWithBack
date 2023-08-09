@@ -2,15 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import taskSlice from './reducer/taskReducer';
 import thunk from 'redux-thunk';
 import { enableMapSet } from 'immer';
-import { newsReducer } from './reducer/testReducer';
-
-// enableMapSet();
-// export const store = configureStore({
-//   reducer: {
-//     task: taskSlice,
-//   },
-//   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat([thunkMiddleware]),
-// });
+import { newsReducer } from './reducer/allTasksReducer';
 
 export const rootReducer = combineReducers({ tasks: newsReducer });
 

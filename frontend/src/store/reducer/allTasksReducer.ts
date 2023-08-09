@@ -1,19 +1,19 @@
 import { Tasks } from '../../types/index';
-import { NewsAction, NewsActionTypes, NewsState } from '../../types/testtype';
+import { TasksAction, TasksState, TasksActionTypes } from '../reducerTypes/testtype';
 
-const initialState: NewsState = {
+const initialState: TasksState = {
   tasks: [],
   loading: false,
   error: null,
 };
 
-export const newsReducer = (state = initialState, action: NewsAction): NewsState => {
+export const newsReducer = (state = initialState, action: TasksAction): TasksState => {
   switch (action.type) {
-    case NewsActionTypes.FETCH_NEWS:
+    case TasksActionTypes.FETCH_TASKS:
       return { loading: true, error: null, tasks: initialState.tasks };
-    case NewsActionTypes.FETCH_NEWS_SUCCESS:
+    case TasksActionTypes.FETCH_TASKS_SUCCESS:
       return { loading: false, error: null, tasks: action.payload };
-    case NewsActionTypes.FETCH_NEWS_ERROR:
+    case TasksActionTypes.FETCH_TASKS_ERROR:
       return { loading: false, error: action.payload, tasks: initialState.tasks };
     default:
       return { loading: false, error: null, tasks: initialState.tasks };

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
 import { Tasks } from '../../types/index.js';
-import { NewsAction, NewsActionTypes } from '../../types/testtype';
+import { TasksAction, TasksActionTypes } from '../reducerTypes/testtype';
 
 const serverUrl = 'http://localhost:8080/api';
 
@@ -15,11 +15,11 @@ const serverUrl = 'http://localhost:8080/api';
 // };
 
 export const getAllTasks = () => {
-  return async (dispatch: Dispatch<NewsAction>) => {
+  return async (dispatch: Dispatch<TasksAction>) => {
     try {
-      dispatch({ type: NewsActionTypes.FETCH_NEWS });
+      dispatch({ type: TasksActionTypes.FETCH_TASKS });
       const response = await axios.get<Tasks>(`${serverUrl}/task`);
-      dispatch({ type: NewsActionTypes.FETCH_NEWS_SUCCESS, payload: response.data.data });
+      dispatch({ type: TasksActionTypes.FETCH_TASKS_SUCCESS, payload: response.data.data });
     } catch (e) {
       throw new Error('Something went wrong');
     }
