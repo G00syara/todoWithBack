@@ -1,3 +1,8 @@
+import {
+  BelongsToManyAddAssociationMixin,
+  BelongsToManyRemoveAssociationMixin,
+  HasManyGetAssociationsMixin,
+} from 'sequelize';
 import { Table, Column, Model, DataType, BelongsToMany, PrimaryKey, AutoIncrement } from 'sequelize-typescript';
 import { Categories } from './categories.model.js';
 import { TasksCategories } from './tasks_categories.model.js';
@@ -21,4 +26,7 @@ export class Tasks extends Model {
 
   @BelongsToMany(() => Categories, () => TasksCategories)
   categories!: Categories[];
+
+  public addCategory!: BelongsToManyAddAssociationMixin<Categories, number>;
+  public removeCategory!: BelongsToManyRemoveAssociationMixin<Categories, number>;
 }

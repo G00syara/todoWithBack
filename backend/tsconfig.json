@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "es6",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -30,11 +30,6 @@
   "ts-node": {
     "esm": true
   },
-  "include": [
-    "**/*.ts",
-    "**/*.js",
-    "**/*.tsx",
-    "src/routes/routes.ts"
-  ],
+  "include": ["**/*.ts", "**/*.js", "**/*.tsx", "src/routes/routes.ts"],
   "exclude": ["node_modules"]
 }
