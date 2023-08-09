@@ -1,8 +1,7 @@
-import pgk from 'pg'
-import 'dotenv/config'
+import pgk from 'pg';
+import 'dotenv/config';
 
-const { Pool } = pgk
-
+const { Pool } = pgk;
 
 export const pool = new Pool({
   user: process.env.POSTGRESS_USER,
@@ -10,4 +9,4 @@ export const pool = new Pool({
   host: process.env.POSTGRESS_HOST,
   port: Number(process.env.POSTGRESS_PORT),
   database: process.env.POSTGRESS_DATABASE,
-})
+});

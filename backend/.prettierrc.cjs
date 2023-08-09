@@ -12,4 +12,4 @@ module.exports = {
   importOrder: ['^[~.]'],
   importOrderSeparation: true,
   importOrderParserPlugins: ['typescript', 'decorators-legacy'],
-}
+};
