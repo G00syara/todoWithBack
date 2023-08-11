@@ -1,5 +1,4 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { TaskCreate, Tasks, TasksCategories } from '../../types/index';
+import { TaskCreate, Tasks, TasksCategories, TasksUpdate } from '../../types/index';
 import { api } from './api';
 
 export const tasksApi = api.injectEndpoints({
@@ -10,11 +9,7 @@ export const tasksApi = api.injectEndpoints({
         url: '/task',
         method: 'POST',
       }),
-      invalidatesTags: () => [
-        {
-          type: 'Tasks',
-        },
-      ],
+      invalidatesTags: ['Tasks'],
     }),
     deleteTask: builder.mutation<null, Tasks>({
       query: (task) => ({
@@ -24,7 +19,7 @@ export const tasksApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Tasks'],
     }),
-    updateTask: builder.mutation<null, Tasks>({
+    updateTask: builder.mutation<null, TasksUpdate>({
       query: (task) => ({
         body: task,
         url: `/task/${task.id}`,

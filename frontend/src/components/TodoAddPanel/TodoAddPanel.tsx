@@ -1,15 +1,20 @@
 import React, { FormEvent, useState } from 'react';
+import { useCreateCategoriesMutation } from '../../store/api/api';
 import { useCreateTaskMutation } from '../../store/api/tasks.api';
-import { TodoAddButton, TodoAddInput, TodoAddPanelWrapper } from './TodoAddPanel.styled';
+import { PanelWrapper, TodoAddButton, TodoAddInput, TodoAddPanelWrapper } from './TodoAddPanel.styled';
 
 const TodoAddPanel = () => {
   const [task, setTask] = useState({
     task_name: '',
   });
+  const [category, setCategory] = useState({
+    categories_name: '',
+  });
 
-  const [createTask] = useCreateTaskMutation();
+  const [createTask, {}] = useCreateTaskMutation();
+  const [createCategory, {}] = useCreateCategoriesMutation();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleAddTodo = (e: FormEvent<HTMLFormElement>) => {
     if (task.task_name === '') {
       e.preventDefault();
     } else {
@@ -21,17 +26,41 @@ const TodoAddPanel = () => {
     }
   };
 
+  const handleAddCategory = (e: FormEvent<HTMLFormElement>) => {
+    if (category.categories_name === '') {
+      e.preventDefault();
+    } else {
+      e.preventDefault();
+      createCategory(category);
+      setCategory({
+        categories_name: '',
+      });
+    }
+  };
+
   return (
-    <TodoAddPanelWrapper onSubmit={handleSubmit}>
-      <TodoAddInput
-        autoComplete="off"
-        type="text"
-        placeholder="New Task..."
-        value={task.task_name.trimStart()}
-        onChange={(e: any) => setTask({ ...task, task_name: e.target.value })}
-      ></TodoAddInput>
-      <TodoAddButton type="submit">+</TodoAddButton>
-    </TodoAddPanelWrapper>
+    <PanelWrapper>
+      <TodoAddPanelWrapper onSubmit={handleAddTodo}>
+        <TodoAddInput
+          autoComplete="off"
+          type="text"
+          placeholder="New Task..."
+          value={task.task_name.trimStart()}
+          onChange={(e: any) => setTask({ ...task, task_name: e.target.value })}
+        ></TodoAddInput>
+        <TodoAddButton type="submit">+</TodoAddButton>
+      </TodoAddPanelWrapper>
+      <TodoAddPanelWrapper onSubmit={handleAddCategory}>
+        <TodoAddInput
+          autoComplete="off"
+          type="text"
+          placeholder="New Category..."
+          value={category.categories_name.trimStart()}
+          onChange={(e: any) => setCategory({ ...category, categories_name: e.target.value })}
+        ></TodoAddInput>
+        <TodoAddButton type="submit">+</TodoAddButton>
+      </TodoAddPanelWrapper>
+    </PanelWrapper>
   );
 };
 

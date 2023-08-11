@@ -7,12 +7,15 @@ export const Button = styled.button`
   background: transparent;
   border-radius: 25%;
   cursor: pointer;
-  width: 50px;
+  width: 60px;
   height: 25px;
   color: lightgray;
   background-color: #0d536d;
   &:hover {
     color: #0ffff8;
     background: #0989a4;
+  }
+  &:after {
+    pointer-events: none;
   }
 `;

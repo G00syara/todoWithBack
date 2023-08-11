@@ -1,11 +1,8 @@
-import React, { useState } from 'react';
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import { useAppDispatch, useTypeSelector } from '../../hooks/useTypeSelector';
-import { useEffect, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
-import { Tasks, TasksCategories } from '../../types/index';
+import React from 'react';
+import { useMemo } from 'react';
+import { Categories, Tasks, TasksCategories } from '../../types/index';
 import TodoItem from '../TodoItem/TodoItem';
-import { useGetTasksQuery } from '../../store/api/api';
+import { useGetTasksQuery, useGetCategoriesQuery } from '../../store/api/api';
 import {
   useAddCategoryToTaskMutation,
   useDeleteCategoryFromTaskMutation,
@@ -15,7 +12,8 @@ import {
 import Loader from '../UI/loader/Loader';
 
 const TodoList: React.FC = () => {
-  const { data: tasks, error, isLoading } = useGetTasksQuery<Tasks>('task');
+  const { data: categories, error, isLoading } = useGetCategoriesQuery<Categories>('categories');
+  const { data: tasks, error: errorTask, isLoading: isLoadingTask } = useGetTasksQuery<Tasks>('task');
 
   const [deleteTask, {}] = useDeleteTaskMutation();
   const [updateTask, {}] = useUpdateTaskMutation();
@@ -39,29 +37,25 @@ const TodoList: React.FC = () => {
   const tasksItems = useMemo(
     () =>
       tasks
-        ? tasks.data?.map((item: Tasks) => (
+        ? tasks.data.map((item: Tasks) => (
             <TodoItem
               remove={handleDelete}
               update={handleUpdate}
               addCategory={handleAddCategory}
               deleteCategory={handleDeleteCategory}
               key={item.id}
+              categories={categories}
               task={item}
             />
           ))
         : 'Something went wrong',
     [tasks],
   );
-
-  console.log(tasksItems);
-
-  if (isLoading === true) {
+  if (isLoadingTask && isLoading) {
     return <Loader />;
   }
 
   return <>{tasksItems}</>;
 };
-
-//
 
 export default TodoList;

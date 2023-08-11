@@ -1,8 +1,11 @@
 import { styled } from 'styled-components';
 
+export const PanelWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 export const TodoAddPanelWrapper = styled.form`
   display: flex;
-  justify-content: space-between;
   align-items: center;
   width: auto;
   height: 50px;
@@ -10,9 +13,15 @@ export const TodoAddPanelWrapper = styled.form`
 export const TodoAddInput = styled.input`
   margin: 0 15px;
   height: 30px;
+  padding-left: 10px;
   font-size: 16px;
-  width: 100%;
+  width: auto;
   border-radius: 15px;
+  color: lightgray;
+  &:focus,
+  &:hover {
+    background: #0d536d;
+  }
 `;
 export const TodoAddButton = styled.button`
   text-align: center;
