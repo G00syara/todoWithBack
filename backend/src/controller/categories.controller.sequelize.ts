@@ -1,7 +1,7 @@
 import { Categories } from '../models/categories.model.js';
-import { NextFunction, RequestHandler } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 
-export const createCategory: RequestHandler = async (req: any, res: any, next: NextFunction) => {
+export const createCategory: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const categories = await Categories.create({ ...req.body });
     res.json({ data: categories });
@@ -10,7 +10,7 @@ export const createCategory: RequestHandler = async (req: any, res: any, next: N
     res.status(400).json({ msg: 'Create Task error' });
   }
 };
-export const getAllCategory: RequestHandler = async (req: any, res: any, next: NextFunction) => {
+export const getAllCategory: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const allCategories: Categories[] = await Categories.findAll();
     res.json({ data: allCategories });
@@ -19,7 +19,7 @@ export const getAllCategory: RequestHandler = async (req: any, res: any, next: N
     res.status(400).json({ msg: 'Get all Task error' });
   }
 };
-export const deletedCategory: RequestHandler = async (req: any, res: any, next: NextFunction) => {
+export const deletedCategory: RequestHandler = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { id } = req.params;
     const deletedCategories: Categories | null = await Categories.findByPk(id);

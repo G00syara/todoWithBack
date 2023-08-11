@@ -3,22 +3,61 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { useAppDispatch, useTypeSelector } from '../../hooks/useTypeSelector';
 import { useEffect, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import { getAllTasks } from '../../store/action/API';
-import { Tasks } from '../../types/index';
+import { Tasks, TasksCategories } from '../../types/index';
 import TodoItem from '../TodoItem/TodoItem';
+import { useGetTasksQuery } from '../../store/api/api';
+import {
+  useAddCategoryToTaskMutation,
+  useDeleteCategoryFromTaskMutation,
+  useDeleteTaskMutation,
+  useUpdateTaskMutation,
+} from '../../store/api/tasks.api';
+import Loader from '../UI/loader/Loader';
 
 const TodoList: React.FC = () => {
-  const { tasks, loading } = useTypeSelector((state) => state.tasks);
-  // const { isLoadingGroups } = useTypeSelector((state) => state.todoGroups);
-  const dispatch = useAppDispatch();
+  const { data: tasks, error, isLoading } = useGetTasksQuery<Tasks>('task');
 
-  tasks.sort((a, b) => (a.id > b.id ? 1 : -1));
+  const [deleteTask, {}] = useDeleteTaskMutation();
+  const [updateTask, {}] = useUpdateTaskMutation();
+  const [addCategoryToTask, {}] = useAddCategoryToTaskMutation();
+  const [deleteCategoryFromTask, {}] = useDeleteCategoryFromTaskMutation();
 
-  const tasksItems = useMemo(() => tasks.map((item: Tasks) => <TodoItem key={item.id} task={item} />), [tasks]);
+  const handleDelete = (tasks: Tasks) => {
+    deleteTask(tasks);
+  };
 
-  useEffect(() => {
-    dispatch(getAllTasks());
-  }, []);
+  const handleUpdate = (tasks: Tasks) => {
+    updateTask(tasks);
+  };
+  const handleAddCategory = (tasks: TasksCategories) => {
+    addCategoryToTask(tasks);
+  };
+  const handleDeleteCategory = (tasks: TasksCategories) => {
+    deleteCategoryFromTask(tasks);
+  };
+
+  const tasksItems = useMemo(
+    () =>
+      tasks
+        ? tasks.data?.map((item: Tasks) => (
+            <TodoItem
+              remove={handleDelete}
+              update={handleUpdate}
+              addCategory={handleAddCategory}
+              deleteCategory={handleDeleteCategory}
+              key={item.id}
+              task={item}
+            />
+          ))
+        : 'Something went wrong',
+    [tasks],
+  );
+
+  console.log(tasksItems);
+
+  if (isLoading === true) {
+    return <Loader />;
+  }
 
   return <>{tasksItems}</>;
 };

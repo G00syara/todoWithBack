@@ -3,11 +3,7 @@ import './css/app.css';
 import TodoForm from './components/TodoForm/TodoForm';
 
 const App = () => {
-  return (
-    <div>
-      <TodoForm />
-    </div>
-  );
+  return <TodoForm />;
 };
 
 export default App;
