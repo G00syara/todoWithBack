@@ -30,7 +30,6 @@ const TodoAddPanel = () => {
     if (category.categories_name === '') {
       e.preventDefault();
     } else {
-      e.preventDefault();
       createCategory(category);
       setCategory({
         categories_name: '',
