@@ -11,6 +11,7 @@ export const connection = new Sequelize({
   username: process.env.POSTGRESS_USER,
   password: process.env.POSTGRESS_PASSWORD,
   database: process.env.POSTGRESS_DATABASE,
+  port: Number(process.env.POSTGRESS_PORT),
   logging: false,
   models: [Tasks, TasksCategories, Categories],
 });
