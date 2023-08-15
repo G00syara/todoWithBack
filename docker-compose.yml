@@ -8,5 +8,5 @@ services:
     ports:
       - '5435:5432'
     environment:
-y      - POSTGRES_DB=todolist
+      - POSTGRES_DB=todolist
       - POSTGRES_PASSWORD=admin
