@@ -8,17 +8,17 @@ import {
   useDeleteCategoryFromTaskMutation,
   useDeleteTaskMutation,
   useUpdateTaskMutation,
-} from '../../store/api/tasks.api';
+} from '../../store/api/mutations.api';
 import Loader from '../UI/loader/Loader';
 
 const TodoList: React.FC = () => {
-  const { data: categories, error, isLoading } = useGetCategoriesQuery<Categories>('categories');
-  const { data: tasks, error: errorTask, isLoading: isLoadingTask } = useGetTasksQuery<Tasks>('task');
+  const { data: categories, isLoading } = useGetCategoriesQuery<Categories>('categories');
+  const { data: tasks, isLoading: isLoadingTask } = useGetTasksQuery<Tasks>('task');
 
-  const [deleteTask, {}] = useDeleteTaskMutation();
-  const [updateTask, {}] = useUpdateTaskMutation();
-  const [addCategoryToTask, {}] = useAddCategoryToTaskMutation();
-  const [deleteCategoryFromTask, {}] = useDeleteCategoryFromTaskMutation();
+  const [deleteTask] = useDeleteTaskMutation();
+  const [updateTask] = useUpdateTaskMutation();
+  const [addCategoryToTask] = useAddCategoryToTaskMutation();
+  const [deleteCategoryFromTask] = useDeleteCategoryFromTaskMutation();
 
   const handleDelete = (tasks: Tasks) => {
     deleteTask(tasks);
@@ -49,7 +49,7 @@ const TodoList: React.FC = () => {
             />
           ))
         : 'Something went wrong',
-    [tasks],
+    [tasks, categories],
   );
   if (isLoadingTask && isLoading) {
     return <Loader />;

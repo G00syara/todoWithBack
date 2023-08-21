@@ -1,4 +1,4 @@
-import { TaskCreate, Tasks, TasksCategories, TasksUpdate } from '../../types/index';
+import { Categories, CategoryCreate, TaskCreate, Tasks, TasksCategories, TasksUpdate } from '../../types/index';
 import { api } from './api';
 
 export const tasksApi = api.injectEndpoints({
@@ -43,6 +43,22 @@ export const tasksApi = api.injectEndpoints({
       }),
       invalidatesTags: ['Tasks'],
     }),
+    createCategories: builder.mutation<null, CategoryCreate>({
+      query: (category) => ({
+        body: category,
+        url: '/categories',
+        method: 'POST',
+      }),
+      invalidatesTags: ['Categories'],
+    }),
+    deleteCategory: builder.mutation<null, Categories>({
+      query: (category) => ({
+        body: category,
+        url: `/categories/${category.id}`,
+        method: 'DELETE',
+      }),
+      invalidatesTags: ['Categories'],
+    }),
   }),
 });
 
@@ -52,4 +68,6 @@ export const {
   useUpdateTaskMutation,
   useAddCategoryToTaskMutation,
   useDeleteCategoryFromTaskMutation,
+  useCreateCategoriesMutation,
+  useDeleteCategoryMutation,
 } = tasksApi;

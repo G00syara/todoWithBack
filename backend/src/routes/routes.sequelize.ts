@@ -11,13 +11,16 @@ import {
 
 export const router = Router();
 
-router.post('/task', createTask);
-router.get('/task', getAllTask);
-router.put('/task/:id', updateTask);
-router.delete('/task/:id', deleteTask);
-router.post('/task/:id/categories/:categoryId', addCategoryToTask);
-router.delete('/task/:id/categories/:categoryId', removeCategoryFromTask);
+const routeTask = '/task';
+const routeCategories = '/categories';
 
-router.get('/categories', getAllCategory);
-router.post('/categories', createCategory);
-router.delete('/categories/:id', deletedCategory);
+router.post(`${routeTask}`, createTask);
+router.get(`${routeTask}`, getAllTask);
+router.put(`${routeTask}/:id`, updateTask);
+router.delete(`${routeTask}/:id`, deleteTask);
+router.post(`${routeTask}/:id${routeCategories}/:categoryId`, addCategoryToTask);
+router.delete(`${routeTask}/:id${routeCategories}/:categoryId`, removeCategoryFromTask);
+
+router.get(`${routeCategories}`, getAllCategory);
+router.post(`${routeCategories}`, createCategory);
+router.delete(`${routeCategories}/:id`, deletedCategory);

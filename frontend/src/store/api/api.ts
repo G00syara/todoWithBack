@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Categories, CategoryCreate, Tasks } from '../../types/index';
+import { Categories, Tasks } from '../../types/index';
 
 const API_URL = 'http://localhost:8080/api';
 
@@ -26,26 +26,8 @@ export const api = createApi({
         },
       ],
     }),
-    createCategories: builder.mutation<null, CategoryCreate>({
-      query: (category) => ({
-        body: category,
-        url: '/categories',
-        method: 'POST',
-      }),
-      invalidatesTags: ['Categories'],
-    }),
-    deleteCategory: builder.mutation<null, Categories>({
-      query: (category) => ({
-        body: category,
-        url: `'/categories/${category.id}'`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['Categories'],
-    }),
   }),
 });
 
 export const { useGetTasksQuery } = api;
-export const { useCreateCategoriesMutation } = api;
 export const { useGetCategoriesQuery } = api;
-export const { useDeleteCategoryMutation } = api;

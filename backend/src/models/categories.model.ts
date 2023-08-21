@@ -1,4 +1,4 @@
-import { Table, Column, Model, DataType, BelongsToMany, PrimaryKey, AutoIncrement } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, BelongsToMany } from 'sequelize-typescript';
 import { Tasks } from './tasks.model.js';
 import { TasksCategories } from './tasks_categories.model.js';
 

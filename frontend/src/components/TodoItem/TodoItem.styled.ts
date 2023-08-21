@@ -1,11 +1,5 @@
 import { styled } from 'styled-components';
 
-// .color1 {color: #112e41;}
-// .color2 {color: #0d536d;}
-// .color3 {color: #0989a4;}
-// .color4 {color: #05cee1;}
-// .color5 {color: #0ffff8;}
-
 export const TodoItemWrapper = styled.div`
   display: flex;
   position: static;
@@ -16,10 +10,10 @@ export const TodoItemWrapper = styled.div`
   margin: 20px;
   background: #5d8aa8;
 `;
-export const TodoItemBetweenWrapperContainer = styled.div``;
+export const MyInput = styled.input``;
+export const MyDiv = styled.div``;
+export const MyForm = styled.form``;
 
-export const TodoItemContainer = styled.div``;
-export const TodoItemFormEdit = styled.form``;
 export const TodoItemInputEdit = styled.input`
   margin-bottom: 5px;
   margin-right: 10px;
@@ -93,8 +87,6 @@ export const TodoItemButtons = styled.div`
   justify-content: end;
   float: right;
 `;
-
-export const TodoItemInput = styled.input``;
 
 export const TodoItemCategoriesList = styled.span`
   position: relative;

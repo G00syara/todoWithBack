@@ -8,14 +8,13 @@ import {
   TodoItemNameCheckbox,
   TodoItemWrapper,
   TodoItemAddCategoryToTodoButton,
-  TodoItemInput,
-  TodoItemContainer,
-  TodoItemFormEdit,
   TodoItemInputEdit,
   TodoItemCategoriesList,
   TodoItemCategoriesListWrapper,
   TodoItemId,
-  TodoItemBetweenWrapperContainer,
+  MyDiv,
+  MyForm,
+  MyInput,
 } from './TodoItem.styled';
 
 interface taskItemProps {
@@ -30,6 +29,8 @@ interface taskItemProps {
 const TaskItem: React.FC<taskItemProps> = ({ task, update, remove, addCategory, deleteCategory, categories }) => {
   console.log(task.id + ' Rendered');
 
+  console.log(categories);
+
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [taskName, setTaskName] = useState<string>('');
   const [isShowCategories, setIsShowCategories] = useState<boolean>(false);
@@ -39,7 +40,7 @@ const TaskItem: React.FC<taskItemProps> = ({ task, update, remove, addCategory, 
     task.categories.map((item: any) => {
       categoriesTaskId.push(item.id);
     });
-  }, [task, categories, categoriesTaskId]);
+  }, [task, categoriesTaskId]);
 
   useEffect(() => {
     takeCategoriesId();
@@ -98,19 +99,19 @@ const TaskItem: React.FC<taskItemProps> = ({ task, update, remove, addCategory, 
   };
 
   //По нажатию на категорию удаляет её у Таска
-  const handleDeleteCategory = (e: number) => {
-    const categoryId = e;
-    const index = categoriesTaskId.indexOf(e);
+  const handleDeleteCategory = (id: number) => {
+    const categoryId = id;
+    const index = categoriesTaskId.indexOf(id);
     categoriesTaskId.splice(index, 1);
     deleteCategory({ task, categoryId });
   };
 
   return (
     <TodoItemWrapper>
-      <TodoItemBetweenWrapperContainer>
-        <TodoItemContainer>
+      <MyDiv>
+        <MyDiv>
           {isEdit ? (
-            <TodoItemFormEdit onSubmit={handleUpdate}>
+            <MyForm onSubmit={handleUpdate}>
               <TodoItemInputEdit
                 autoComplete="off"
                 type="text"
@@ -120,14 +121,14 @@ const TaskItem: React.FC<taskItemProps> = ({ task, update, remove, addCategory, 
               ></TodoItemInputEdit>
               <MyButton type="submit">Edit</MyButton>
               <MyButton onClick={handleCancel}>Cancel</MyButton>
-            </TodoItemFormEdit>
+            </MyForm>
           ) : (
             <TodoItemNameCheckbox
               style={{
                 textDecoration: task.task_checked ? 'line-through' : 'none',
               }}
             >
-              <TodoItemInput
+              <MyInput
                 type="checkbox"
                 key={task.id}
                 checked={task.task_checked}
@@ -138,7 +139,7 @@ const TaskItem: React.FC<taskItemProps> = ({ task, update, remove, addCategory, 
               {task.task_name}
             </TodoItemNameCheckbox>
           )}
-        </TodoItemContainer>
+        </MyDiv>
         <TodoItemCategoryWrapper>
           <TodoItemAddCategoryToTodoButton key={task.id} onClick={handleShowCategories}>
             📝
@@ -147,9 +148,7 @@ const TaskItem: React.FC<taskItemProps> = ({ task, update, remove, addCategory, 
             <TodoItemCategoriesListWrapper>
               {categories.data.map((item: Categories) => (
                 <>
-                  {categoriesTaskId.includes(item.id) ? (
-                    ''
-                  ) : (
+                  {categoriesTaskId.includes(item.id) ? null : (
                     <TodoItemCategoriesList key={item.id} onClick={() => handleAddCategory(item.id)}>
                       {item.categories_name}
                     </TodoItemCategoriesList>
@@ -167,16 +166,17 @@ const TaskItem: React.FC<taskItemProps> = ({ task, update, remove, addCategory, 
             ''
           )}
         </TodoItemCategoryWrapper>
-      </TodoItemBetweenWrapperContainer>
+      </MyDiv>
       <TodoItemButtons>
         <MyButton onClick={handleDelete}>Del</MyButton>
-        {!isEdit ? <MyButton onClick={() => setIsEdit(true)}>Edit</MyButton> : ''}
+        {!isEdit && <MyButton onClick={() => setIsEdit(true)}>Edit</MyButton>}
       </TodoItemButtons>
     </TodoItemWrapper>
   );
 };
 
 export default React.memo(TaskItem, (x, y) => {
+  if (x.categories.data.length !== y.categories.data.length) return false;
   if (x.task === y.task) return true;
 
   return false;

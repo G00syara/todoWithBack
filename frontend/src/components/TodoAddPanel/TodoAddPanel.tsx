@@ -1,6 +1,5 @@
 import React, { FormEvent, useState } from 'react';
-import { useCreateCategoriesMutation } from '../../store/api/api';
-import { useCreateTaskMutation } from '../../store/api/tasks.api';
+import { useCreateTaskMutation, useCreateCategoriesMutation } from '../../store/api/mutations.api';
 import { PanelWrapper, TodoAddButton, TodoAddInput, TodoAddPanelWrapper } from './TodoAddPanel.styled';
 
 const TodoAddPanel = () => {
@@ -11,14 +10,14 @@ const TodoAddPanel = () => {
     categories_name: '',
   });
 
-  const [createTask, {}] = useCreateTaskMutation();
-  const [createCategory, {}] = useCreateCategoriesMutation();
+  const [createTask] = useCreateTaskMutation();
+  const [createCategory] = useCreateCategoriesMutation();
 
   const handleAddTodo = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (task.task_name === '') {
-      e.preventDefault();
+      return;
     } else {
-      e.preventDefault();
       createTask(task);
       setTask({
         task_name: '',
@@ -27,8 +26,9 @@ const TodoAddPanel = () => {
   };
 
   const handleAddCategory = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (category.categories_name === '') {
-      e.preventDefault();
+      return;
     } else {
       createCategory(category);
       setCategory({
